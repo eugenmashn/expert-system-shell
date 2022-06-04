@@ -1,0 +1,10 @@
+.nuget/
+bin/
+obj/
+packages/
+node_modules/
+_ReSharper.Caches
+.vscode
+.vs
+*.user
+*.xml
