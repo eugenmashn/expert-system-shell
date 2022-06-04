@@ -1,5 +1,6 @@
 ﻿using DomainService.Models;
 using DomainService.Repository;
+using DomainService.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ServerTraveling.Controllers
@@ -7,7 +8,7 @@ namespace ServerTraveling.Controllers
    
     public class RuleController : BaseController<Rule>
     {
-        public RuleController(IGenericRepository<Rule> service) : base(service)
+        public RuleController(IRuleService service) : base(service)
         {
         }
     }

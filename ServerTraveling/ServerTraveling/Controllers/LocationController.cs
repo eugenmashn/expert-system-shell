@@ -1,12 +1,13 @@
 using DomainService.Models;
 using DomainService.Repository;
+using DomainService.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ServerTraveling.Controllers
 {
     public class LocationController : BaseController<Location>
     {
-        public LocationController(IGenericRepository<Location> service) : base(service)
+        public LocationController(ILocationService service) : base(service)
         {
         }
     }
