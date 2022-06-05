@@ -9,12 +9,12 @@ namespace DomainService.Models
 {
     public class Characteristic
     {
-        public PriceCharacteristics PriceCharacteristic { get; set; }
-        public LocalityCharacteristics LocalityCharacteristic { get; set; }
-        public AbroadCharacteristics AbroadCharacteristic { get; set; }
-        public CuisineCharacteristics CuisineCharacteristic { get; set; }
-        public TransportCharacteristics TransportCharacteristics { get; set; }
-        public AccessibilityCharacteristics AccessibilityCharacteristic { get; set; }
-        public MonumentsCharacteristics MonumentsCharacteristic { get; set; }
+        public PriceCharacteristics? PriceCharacteristic { get; set; }
+        public LocalityCharacteristics? LocalityCharacteristic { get; set; }
+        public AbroadCharacteristics? AbroadCharacteristic { get; set; }
+        public CuisineCharacteristics? CuisineCharacteristic { get; set; }
+        public TransportCharacteristics? TransportCharacteristics { get; set; }
+        public AccessibilityCharacteristics? AccessibilityCharacteristic { get; set; }
+        public MonumentsCharacteristics? MonumentsCharacteristic { get; set; }
     }
 }

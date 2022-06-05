@@ -1,5 +1,6 @@
 ﻿using DomainService.Models;
 using DomainService.Repository;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Linq;
 namespace ServerTraveling.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public abstract class BaseController<TEntity>: ControllerBase where TEntity : BaseModel
     {
         protected IGenericRepository<TEntity> _service;
@@ -36,9 +37,9 @@ namespace ServerTraveling.Controllers
         [HttpPost("create")]
         virtual async public Task<ActionResult<TEntity>> Create(TEntity entity)
         {
-            var domain = _service.FindById(entity.Id);
-            if (domain == null)
-                return NotFound();
+            var domain = await _service.FindById(entity.Id);
+            if (domain != null)
+                return BadRequest();
             await _service.Create(entity);
             return entity;
         }

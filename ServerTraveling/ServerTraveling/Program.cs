@@ -15,7 +15,19 @@ builder.Services.AddDbContextService(builder.Configuration.GetConnectionString("
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+{
+    builder.WithOrigins("http://localhost:3000")
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
+
+
 var app = builder.Build();
+
+app.UseCors("MyPolicy");
+
 
 // Configure the HTTP request pipeline.
 app.MapControllerRoute( name: "default", pattern: "{controller}/{action}/{id?}");
