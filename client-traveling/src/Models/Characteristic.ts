@@ -4,9 +4,9 @@ export interface Characteristic
 {
     priceCharacteristic: PriceCharacteristics,
     localityCharacteristic: LocalityCharacteristics,
-    AbroadCharacteristic : AbroadCharacteristics,
-    CuisineCharacteristic : CuisineCharacteristics
-    TransportCharacteristics : TransportCharacteristics
-    AccessibilityCharacteristic : AccessibilityCharacteristics
-    MonumentsCharacteristic : MonumentsCharacteristics
+    abroadCharacteristic : AbroadCharacteristics,
+    cuisineCharacteristic : CuisineCharacteristics
+    transportCharacteristics : TransportCharacteristics
+    accessibilityCharacteristic : AccessibilityCharacteristics
+    monumentsCharacteristic : MonumentsCharacteristics
 }

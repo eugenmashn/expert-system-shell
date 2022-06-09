@@ -1,20 +1,41 @@
-import { RouteObject, useRoutes } from "react-router-dom";
+import { Navigate, RouteObject, useRoutes } from "react-router-dom";
+import { DetailLocation } from "../components/Location/components/DetailLocation";
 import { LocationComponent } from "../components/Location/LocationComponent";
-import {RuleComponent} from '../components/Rule/RuleComponent';
+import { RuleComponent } from "../components/Rule/RuleComponent";
+
+export enum EnumTypePage{
+  Edit = 'edit',
+  Create = 'create'
+}
+
+export const routes: RouteObject[] = [
+  {
+    element: <RuleComponent />,
+    path: "/rule",
+  },
+  {
+    path: "",
+    element: <Navigate to="/location" />
+  },
+  {
+    element: <LocationComponent />,
+    path: "/location",
+    children:[
+      {
+        element:<DetailLocation/>,
+        path: `:typePage`
+      },
+      {
+        element:<DetailLocation/>,
+        path: `:typePage/:id`
+      },
+    ]
+  },
+];
 
 
-export const routes: RouteObject[]  = [
-    {
-      element: <RuleComponent/>,
-      path: "/rule",
-    },
-    {
-      element: <LocationComponent />,
-      path: "/",
-    },
-  ];
 
-  export function RouteComponent(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | null {
-    const routesComponent = useRoutes(routes);
-    return routesComponent;
-  };
+export function RouteComponent(): React.ReactElement<any,string | React.JSXElementConstructor<any>> | null {
+  const routesComponent = useRoutes(routes);
+  return routesComponent;
+}
