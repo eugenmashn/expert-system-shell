@@ -49,10 +49,10 @@ namespace ServerTraveling.Controllers
             await _service.Create(newObject);
             return entity;
         }
-        [HttpPost("delete/{id:Guid}")]
-        virtual async public Task<IActionResult> Delete(Guid id)
+        [HttpDelete("delete/{id}")]
+        virtual async public Task<IActionResult> Delete(string id)
         {
-            var domain = await _service.FindById(id);
+            var domain = await _service.FindById(new Guid(id));
             if (domain == null)
                 return NotFound();
             await _service.Remove(domain);

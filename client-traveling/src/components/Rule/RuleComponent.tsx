@@ -1,98 +1,124 @@
+import Button from "@mui/material/Button";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import { GridColDef } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid/DataGrid";
 import { Outlet, useNavigate } from "react-router-dom";
-import { AbroadCharacteristics, AccessibilityCharacteristics, CuisineCharacteristics, LocalityCharacteristics, PriceCharacteristics, TransportCharacteristics } from "../../Enums/CharacteristicsEnums";
+import {
+  AbroadCharacteristics,
+  AccessibilityCharacteristics,
+  CuisineCharacteristics,
+  LocalityCharacteristics,
+  PriceCharacteristics,
+  TransportCharacteristics,
+} from "../../Enums/CharacteristicsEnums";
 import { TypeDetailPage } from "../../Enums/TypeDetailPageEnum";
 import { LocationPlace } from "../../Models/Location";
 import { Rule } from "../../Models/Rule";
 import { apiRule } from "../../service/Api/injections";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const RuleComponent = () => {
+  const [remove] = apiRule.useDelete.useMutation();
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { field: "id", headerName: "ID", width: 90 },
     {
-      field: 'location',
-      headerName: 'Location',
+      field: "location",
+      headerName: "Location",
       width: 150,
       editable: true,
-      renderCell: (params) =>{
-        return ((params.value) as LocationPlace)?.name ??'';
-      }
+      renderCell: (params) => {
+        return (params.value as LocationPlace)?.name ?? "";
+      },
     },
     {
-      field: 'priceCharacteristic',
-      headerName: 'Price',
+      field: "priceCharacteristic",
+      headerName: "Price",
       width: 150,
       editable: true,
-      renderCell: (params) =>{
-        return (PriceCharacteristics[(params.value)]);
-      }
+      renderCell: (params) => {
+        return PriceCharacteristics[params.value];
+      },
     },
     {
-      field: 'localityCharacteristic',
-      headerName: 'Locality',
-      type: 'number',
+      field: "localityCharacteristic",
+      headerName: "Locality",
+      type: "number",
       width: 110,
       editable: true,
-      renderCell: (params) =>{
-        return (LocalityCharacteristics[(params.value)]);
-      }
+      renderCell: (params) => {
+        return LocalityCharacteristics[params.value];
+      },
     },
     {
-      field: 'abroadCharacteristic',
-      headerName: 'Abroad',
-      type: 'number',
+      field: "abroadCharacteristic",
+      headerName: "Abroad",
+      type: "number",
       width: 110,
       editable: true,
-      renderCell: (params) =>{
-        return (AbroadCharacteristics[(params.value)]);
-      }
+      renderCell: (params) => {
+        return AbroadCharacteristics[params.value];
+      },
     },
     {
-      field: 'cuisineCharacteristic',
-      headerName: 'Cuisine',
-      type: 'number',
+      field: "cuisineCharacteristic",
+      headerName: "Cuisine",
+      type: "number",
       width: 110,
       editable: true,
-      renderCell: (params) =>{
-        return (CuisineCharacteristics[(params.value)]);
-      }
+      renderCell: (params) => {
+        return CuisineCharacteristics[params.value];
+      },
     },
     {
-      field: 'transportCharacteristics',
-      headerName: 'Transport',
-      type: 'number',
+      field: "transportCharacteristics",
+      headerName: "Transport",
+      type: "number",
       width: 110,
       editable: true,
-      renderCell: (params) =>{
-        return (TransportCharacteristics[(params.value)]);
-      }
+      renderCell: (params) => {
+        return TransportCharacteristics[params.value];
+      },
     },
     {
-      field: 'accessibilityCharacteristic',
-      headerName: 'Accessibility',
-      type: 'number',
+      field: "accessibilityCharacteristic",
+      headerName: "Accessibility",
+      type: "number",
       width: 110,
       editable: true,
-      renderCell: (params) =>{
-        return (AccessibilityCharacteristics[(params.value)]);
-      }
+      renderCell: (params) => {
+        return AccessibilityCharacteristics[params.value];
+      },
     },
     {
-      field: 'monumentsCharacteristic',
-      headerName: 'Monuments',
-      type: 'number',
+      field: "monumentsCharacteristic",
+      headerName: "Monuments",
+      type: "number",
       width: 110,
       editable: true,
-      renderCell: (params) =>{
-        return (AccessibilityCharacteristics[(params.value)]);
-      }
+      renderCell: (params) => {
+        return AccessibilityCharacteristics[params.value];
+      },
+    },
+    {
+      field: "action",
+      headerName: "",
+      type: "",
+      width: 110,
+      renderCell: (params) => {
+        return (
+          <Button
+            onClick={() => remove(params.id.toString())}
+            endIcon={<DeleteIcon />}
+          >
+          </Button>
+        );
+      },
     },
   ];
+
   const navigate = useNavigate();
-  const rows = apiRule.useGetAll.useQuery().data as Rule[] ?? [];
+  const rows = (apiRule.useGetAll.useQuery().data as Rule[]) ?? [];
   return (
     <div>
       <div style={{ height: 600, width: "100%" }}>
@@ -107,10 +133,10 @@ export const RuleComponent = () => {
         />
         <SpeedDial
           ariaLabel="SpeedDial basic example"
-          onClick={() => navigate(
-              {
-                pathname: `${TypeDetailPage.Create}`,
-              })
+          onClick={() =>
+            navigate({
+              pathname: `${TypeDetailPage.Create}`,
+            })
           }
           sx={{ position: "absolute", bottom: 16, right: 16 }}
           icon={<SpeedDialIcon />}

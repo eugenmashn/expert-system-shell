@@ -4,7 +4,8 @@ import httpCommon from '../http-common'
 export enum TypeApiAction{
     getAll = 'GetAll',
     create = 'create',
-    getById = 'getById'
+    getById = 'getById',
+    delete = 'delete'
 }
 export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: httpCommon.getUri() }),
@@ -14,10 +15,11 @@ export const api = createApi({
 })
 
 export const apiCrudInject = <T>(name: string, tag: string) =>{
-    const getAll = injectGetAll<T>(name, tag);
-    const create = injectCreate<T>(name, tag);
-    const getByID = injectGetByID<T>(name,tag);
-    return {"useGetAll" : getAll,"useCreate": create, "useGetById": getByID}
+    const ingGetAll = injectGetAll<T>(name, tag);
+    const injCreate = injectCreate<T>(name, tag);
+    const injGetByID = injectGetByID<T>(name,tag);
+    const injDelete = injectDelete<T>(name, tag);
+    return {"useGetAll" : ingGetAll,"useCreate": injCreate, "useGetById": injGetByID, "useDelete" : injDelete}
 }
 
 export const injectGetAll = <T>(name: string, tag: string) => {
@@ -58,4 +60,17 @@ export const injectCreate = <T>(name: string, tag: string) => {
     }),
   });
   return entityApi.endpoints[TypeApiAction.create + name];
+};
+
+export const injectDelete = <T>(name: string, tag: string) => {
+  const enhancedApi = api.enhanceEndpoints({ addTagTypes: [tag] });
+  const entityApi = enhancedApi.injectEndpoints({
+    endpoints: (build) => ({
+      [TypeApiAction.delete + name]: build.mutation<T, string>({
+        query: (id: string) => ({ url: name+`/${TypeApiAction.delete}/${id}`, method: 'DELETE'}),
+        invalidatesTags: (result, error) => [{ type: tag}],
+      }),
+    }),
+  });
+  return entityApi.endpoints[TypeApiAction.delete + name];
 };

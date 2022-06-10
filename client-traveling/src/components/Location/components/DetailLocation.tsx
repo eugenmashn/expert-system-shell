@@ -25,7 +25,7 @@ export const DetailLocation = () => {
     navigate("/");
   }
   return (
-    <Dialog open={true} onClose={handleClose}>
+    <Dialog open={true}  onClose={handleClose}>
       <DialogTitle>Location</DialogTitle>
       <DialogContent>
         <DialogContentText>
