@@ -31,6 +31,10 @@ namespace DomainService
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<Rule>()
+                .Navigation(p => p.Location)
+                .AutoInclude();
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

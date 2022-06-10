@@ -14,5 +14,6 @@ namespace DomainService.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string? PhotoBase64 { get; set; }
+
     }
 }

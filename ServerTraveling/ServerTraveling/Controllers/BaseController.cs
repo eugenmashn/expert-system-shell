@@ -34,13 +34,19 @@ namespace ServerTraveling.Controllers
             return entity;
         }
 
+        virtual internal Task<TEntity> toDomainModel(TEntity webModel)
+        {
+            return Task.FromResult(webModel);
+        }
+
         [HttpPost("create")]
         virtual async public Task<ActionResult<TEntity>> Create(TEntity entity)
         {
             var domain = await _service.FindById(entity.Id);
             if (domain != null)
                 return BadRequest();
-            await _service.Create(entity);
+            var newObject = await toDomainModel(entity);
+            await _service.Create(newObject);
             return entity;
         }
         [HttpPost("delete/{id:Guid}")]

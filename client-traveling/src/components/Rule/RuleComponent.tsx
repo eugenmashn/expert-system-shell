@@ -1,5 +1,10 @@
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import { GridColDef } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid/DataGrid";
+import { Outlet, useNavigate } from "react-router-dom";
+import { AbroadCharacteristics, AccessibilityCharacteristics, CuisineCharacteristics, LocalityCharacteristics, PriceCharacteristics, TransportCharacteristics } from "../../Enums/CharacteristicsEnums";
+import { TypeDetailPage } from "../../Enums/TypeDetailPageEnum";
 import { LocationPlace } from "../../Models/Location";
 import { Rule } from "../../Models/Rule";
 import { apiRule } from "../../service/Api/injections";
@@ -13,7 +18,7 @@ export const RuleComponent = () => {
       width: 150,
       editable: true,
       renderCell: (params) =>{
-        return ((params.value) as LocationPlace).name;
+        return ((params.value) as LocationPlace)?.name ??'';
       }
     },
     {
@@ -21,6 +26,9 @@ export const RuleComponent = () => {
       headerName: 'Price',
       width: 150,
       editable: true,
+      renderCell: (params) =>{
+        return (PriceCharacteristics[(params.value)]);
+      }
     },
     {
       field: 'localityCharacteristic',
@@ -28,6 +36,9 @@ export const RuleComponent = () => {
       type: 'number',
       width: 110,
       editable: true,
+      renderCell: (params) =>{
+        return (LocalityCharacteristics[(params.value)]);
+      }
     },
     {
       field: 'abroadCharacteristic',
@@ -35,6 +46,9 @@ export const RuleComponent = () => {
       type: 'number',
       width: 110,
       editable: true,
+      renderCell: (params) =>{
+        return (AbroadCharacteristics[(params.value)]);
+      }
     },
     {
       field: 'cuisineCharacteristic',
@@ -42,6 +56,9 @@ export const RuleComponent = () => {
       type: 'number',
       width: 110,
       editable: true,
+      renderCell: (params) =>{
+        return (CuisineCharacteristics[(params.value)]);
+      }
     },
     {
       field: 'transportCharacteristics',
@@ -49,6 +66,9 @@ export const RuleComponent = () => {
       type: 'number',
       width: 110,
       editable: true,
+      renderCell: (params) =>{
+        return (TransportCharacteristics[(params.value)]);
+      }
     },
     {
       field: 'accessibilityCharacteristic',
@@ -56,6 +76,9 @@ export const RuleComponent = () => {
       type: 'number',
       width: 110,
       editable: true,
+      renderCell: (params) =>{
+        return (AccessibilityCharacteristics[(params.value)]);
+      }
     },
     {
       field: 'monumentsCharacteristic',
@@ -63,13 +86,17 @@ export const RuleComponent = () => {
       type: 'number',
       width: 110,
       editable: true,
+      renderCell: (params) =>{
+        return (AccessibilityCharacteristics[(params.value)]);
+      }
     },
   ];
-  
+  const navigate = useNavigate();
   const rows = apiRule.useGetAll.useQuery().data as Rule[] ?? [];
   return (
     <div>
       <div style={{ height: 600, width: "100%" }}>
+        <Outlet></Outlet>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -78,6 +105,16 @@ export const RuleComponent = () => {
           checkboxSelection
           disableSelectionOnClick
         />
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          onClick={() => navigate(
+              {
+                pathname: `${TypeDetailPage.Create}`,
+              })
+          }
+          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+        ></SpeedDial>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
 import { DetailLocation } from "../components/Location/components/DetailLocation";
 import { LocationComponent } from "../components/Location/LocationComponent";
+import { DetailRule } from "../components/Rule/components/RuleDetailComponents";
 import { RuleComponent } from "../components/Rule/RuleComponent";
 
 export enum EnumTypePage{
@@ -12,6 +13,16 @@ export const routes: RouteObject[] = [
   {
     element: <RuleComponent />,
     path: "/rule",
+    children:[
+      {
+        element:<DetailRule/>,
+        path: `:typePage`
+      },
+      {
+        element:<DetailRule/>,
+        path: `:typePage/:id`
+      }
+    ]
   },
   {
     path: "",

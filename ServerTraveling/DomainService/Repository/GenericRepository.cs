@@ -27,7 +27,7 @@ namespace DomainService.Repository
 
         public async Task<TEntity> FindById(Guid id)
         {
-            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id); 
+            return await _dbSet.FirstOrDefaultAsync(e => e.Id == id); 
         }
 
         public IQueryable<TEntity> Get()
